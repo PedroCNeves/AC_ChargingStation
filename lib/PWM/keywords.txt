@@ -1,0 +1,91 @@
+#######################################
+# Syntax Coloring Map PWM
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+InitTimers	KEYWORD2
+InitTimersSafe	KEYWORD2
+pwmWrite	KEYWORD2
+pwmWriteHR	KEYWORD2
+SetPinFrequency	KEYWORD2
+SetPinFrequencySafe	KEYWORD2
+GetPinResolution KEYWORD2
+
+Timer0_GetFrequency	KEYWORD2
+Timer0_SetFrequency	KEYWORD2
+Timer0_GetPrescaler	KEYWORD2
+Timer0_SetPrescaler	KEYWORD2
+Timer0_GetTop	KEYWORD2
+Timer0_SetTop	KEYWORD2
+Timer0_Initialize	KEYWORD2
+Timer0_GetResolution KEYWORD2
+
+Timer1_GetFrequency	KEYWORD2
+Timer1_SetFrequency	KEYWORD2
+Timer1_GetPrescaler	KEYWORD2
+Timer1_SetPrescaler	KEYWORD2
+Timer1_GetTop	KEYWORD2
+Timer1_SetTop	KEYWORD2
+Timer1_Initialize	KEYWORD2
+Timer1_GetResolution KEYWORD2
+
+Timer2_GetFrequency	KEYWORD2
+Timer2_SetFrequency	KEYWORD2
+Timer2_GetPrescaler	KEYWORD2
+Timer2_SetPrescaler	KEYWORD2
+Timer2_GetTop	KEYWORD2
+Timer2_SetTop	KEYWORD2
+Timer2_Initialize	KEYWORD2
+Timer2_GetResolution KEYWORD2
+
+Timer3_GetFrequency	KEYWORD2
+Timer3_SetFrequency	KEYWORD2
+Timer3_GetPrescaler	KEYWORD2
+Timer3_SetPrescaler	KEYWORD2
+Timer3_GetTop	KEYWORD2
+Timer3_SetTop	KEYWORD2
+Timer3_Initialize	KEYWORD2
+Timer3_GetResolution KEYWORD2
+
+Timer4_GetFrequency	KEYWORD2
+Timer4_SetFrequency	KEYWORD2
+Timer4_GetPrescaler	KEYWORD2
+Timer4_SetPrescaler	KEYWORD2
+Timer4_GetTop	KEYWORD2
+Timer4_SetTop	KEYWORD2
+Timer4_Initialize	KEYWORD2
+Timer4_GetResolution KEYWORD2
+
+Timer5_GetFrequency	KEYWORD2
+Timer5_SetFrequency	KEYWORD2
+Timer5_GetPrescaler	KEYWORD2
+Timer5_SetPrescaler	KEYWORD2
+Timer5_GetTop	KEYWORD2
+Timer5_SetTop	KEYWORD2
+Timer5_Initialize	KEYWORD2
+Timer5_GetResolution KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+ps_1 LITERAL1
+ps_8 LITERAL1
+ps_64 LITERAL1
+ps_256 LITERAL1
+ps_1024 LITERAL1
+
+psalt_1 LITERAL1
+psalt_8 LITERAL1
+psalt_32 LITERAL1
+psalt_64 LITERAL1
+psalt_128 LITERAL1
+psalt_256 LITERAL1
+psalt_1024 LITERAL1
