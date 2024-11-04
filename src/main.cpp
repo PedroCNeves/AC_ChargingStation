@@ -1,43 +1,48 @@
 #include <Arduino.h>
 #include "PWM.h"
 
-#define CP_OUT 10
-#define CP_IN A0
+#define CP_OUT 10 // Setting Arduino pin 10 as output - Control Pilot signal generator
+#define CP_IN A0 // Setting Arduino pin A0 as input - Control Pilot signal reader
 
-int counter = 0;
-int counter2 = 0;
+int counter = 0; // Initialize counter for debug messages over the serial port
+int counter2 = 0; // Initialize counter for LED blinking when charging
 
-float cp_pwm = 255;
-int frequency = 1000;
+float cp_pwm = 255; // Initialize the PWM value for the Control Pilot signal generator (255 = flat positive signal)
+int frequency = 1000; // Initialize the frequency of the PWM signal (1 kHz)
+// Initialize the PWM value for the Control Pilot signal generator when charging 
+// Example: Set to 10 A -> Duty Cycle = 10/0.6 = 16.67% -> 255 * 0.1667 = 42.5
+// Example: Set t0 16 A -> Duty Cycle = 16/0.6 = 26.66% -> 255 * 0.266 = 68.3
+float cp_pwm_charging = 42; // (42 = 10 A)
 
-int findPeakVoltage();
-int peak_voltage = 0;
-int current_voltage = 0;
+int findPeakVoltage();  // Function prototype for finding the peak voltage read by pin A0 and determine the charging state (A, B, C, F)
+int peak_voltage = 0; // Initialize the peak voltage read by pin A0
+int current_voltage = 0; // Initialize the current voltage read by pin A0
 
-char state = 'z';
-
-int charging = 0;
+char state = 'a'; // Initialize the charging state (A, B, C, F)
+int charging = 0; // Initialize the charging state (0 = not charging, 1 = charging)
 
 void setup() {
-  // Set up the serial port
-  Serial.begin(9600);
+  // Set up the serial port. This is useful for debugging
+  Serial.begin(9600); // Set the baud rate to 9600 bps
 
   // Set up the PWM
   InitTimersSafe();
-  bool success = SetPinFrequencySafe(CP_OUT, frequency);
+  bool success = SetPinFrequencySafe(CP_OUT, frequency); // Set the frequency of the PWM signal to 1 kHz
   if(success) {
-    pinMode(CP_OUT, OUTPUT);  
+    pinMode(CP_OUT, OUTPUT); // Set the CP_OUT pin as output
+    pwmWrite(CP_OUT, 255); // Set the CP_OUT pin to +12V
   }
 
-  // Set up the LEDs
+  // Set up the LED pins as output
   pinMode(4, OUTPUT);
   pinMode(6, OUTPUT);
   pinMode(2, OUTPUT);
   pinMode(3, OUTPUT);
 
-  //Relay
+  // Set the Relay pin as output
   pinMode(16, OUTPUT);
 
+  // Initialize Relay and LEDs states
   digitalWrite(16, LOW); // Relays open
   digitalWrite(6, HIGH); // Top LED on
   digitalWrite(2, LOW); // Bottom LED off
@@ -47,7 +52,7 @@ void loop() {
   counter++;
   if (counter > 10) {
     counter = 0;
-    Serial.println("contador = 10");
+    Serial.println("Counter = 10");
     Serial.print("Peak Voltage: ");
     Serial.println(peak_voltage);
     Serial.println(state);
@@ -56,7 +61,7 @@ void loop() {
     counter2++;
     if (counter2 > 10) {
       counter2 = 0;
-      //if digitalwrite 3 is high, turn it off
+      // Blink the middle LEDs when charging
       if (digitalRead(3) == HIGH) {
         digitalWrite(3, LOW);
         digitalWrite(4, HIGH);
@@ -86,7 +91,7 @@ void loop() {
     //state B
     state = 'b';
     charging = 0;
-    pwmWrite(CP_OUT, 42); // 10 A -> Duty Cycle = 10/0.6 = 16.67% -> 255 * 0.1667 = 42.5
+    pwmWrite(CP_OUT, cp_pwm_charging); // Exanple 10 A -> Duty Cycle = 10/0.6 = 16.67% -> 255 * 0.1667 = 42.5
     digitalWrite(16, LOW); // Relays open
     digitalWrite(2, HIGH); // Bottom LED on
     digitalWrite(3, LOW); // Middle d LED off
@@ -96,15 +101,15 @@ void loop() {
     //state C
     state = 'c';
     charging = 1;
-    pwmWrite(CP_OUT, 42);
+    pwmWrite(CP_OUT, cp_pwm_charging); // Exanple 10 A -> Duty Cycle = 10/0.6 = 16.67% -> 255 * 0.1667 = 42.5
     digitalWrite(16, HIGH); // Relays closed
     digitalWrite(2, HIGH); // Bottom LED on
   }
   else {
     //state F
-    state = 'f';
+    state = 'f'; // CP set to fixed -12V
     charging = 0;
-    pwmWrite(CP_OUT, 255);
+    pwmWrite(CP_OUT, 0);
     digitalWrite(16, LOW); // Relays open
     digitalWrite(2, LOW); // Bottom LED off
     digitalWrite(3, LOW); // Middle d LED off
