@@ -5,4 +5,4 @@ This repository contains:
 - Gerber files to fabricate the Shield.
 - BOM to assemble the Shield.
 
-Instructions to execute this learning project: https://www.udemy.com/course/electric-vehicle-charging-from-theory-to-practice/learn/lecture/42720488#overview
+Instructions to execute this learning project: https://www.udemy.com/course/electric-vehicle-charging-from-theory-to-practice/?referralCode=AC67637479A66E6618A2
